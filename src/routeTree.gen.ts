@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ScribeRouteImport } from './routes/scribe'
+import { Route as ClinicalRouteImport } from './routes/clinical'
 import { Route as IndexRouteImport } from './routes/index'
 
 const ScribeRoute = ScribeRouteImport.update({
   id: '/scribe',
   path: '/scribe',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ClinicalRoute = ClinicalRouteImport.update({
+  id: '/clinical',
+  path: '/clinical',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -25,27 +31,31 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/clinical': typeof ClinicalRoute
   '/scribe': typeof ScribeRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/clinical': typeof ClinicalRoute
   '/scribe': typeof ScribeRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/clinical': typeof ClinicalRoute
   '/scribe': typeof ScribeRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/scribe'
+  fullPaths: '/' | '/clinical' | '/scribe'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/scribe'
-  id: '__root__' | '/' | '/scribe'
+  to: '/' | '/clinical' | '/scribe'
+  id: '__root__' | '/' | '/clinical' | '/scribe'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ClinicalRoute: typeof ClinicalRoute
   ScribeRoute: typeof ScribeRoute
 }
 
@@ -56,6 +66,13 @@ declare module '@tanstack/react-router' {
       path: '/scribe'
       fullPath: '/scribe'
       preLoaderRoute: typeof ScribeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/clinical': {
+      id: '/clinical'
+      path: '/clinical'
+      fullPath: '/clinical'
+      preLoaderRoute: typeof ClinicalRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -70,6 +87,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ClinicalRoute: ClinicalRoute,
   ScribeRoute: ScribeRoute,
 }
 export const routeTree = rootRouteImport
