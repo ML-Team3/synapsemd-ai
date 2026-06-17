@@ -180,7 +180,10 @@ export const useEncounter = create<EncounterState>((set) => ({
   approveOrder: (id) =>
     set((s) => ({
       orders: s.orders.map((o) => (o.id === id ? { ...o, approved: true } : o)),
-      feed: [{ id: mkId(), agent: "Order", text: `Approved: ${s.orders.find((o) => o.id === id)?.name}`, ts: Date.now(), tone: "success" }, ...s.feed].slice(0, 40),
+      feed: [
+        { id: mkId(), agent: "Order", text: `Approved: ${s.orders.find((o) => o.id === id)?.name}`, ts: Date.now(), tone: "success" as const },
+        ...s.feed,
+      ].slice(0, 40),
     })),
   removeOrder: (id) =>
     set((s) => ({ orders: s.orders.filter((o) => o.id !== id) })),
@@ -190,7 +193,7 @@ export const useEncounter = create<EncounterState>((set) => ({
       ehrSync: Math.min(100, s.ehrSync + 18),
       claimReadiness: Math.min(100, s.claimReadiness + 6),
       feed: [
-        { id: mkId(), agent: "EHR", text: "Orders synchronized to Epic Hyperdrive", ts: Date.now(), tone: "success" },
+        { id: mkId(), agent: "EHR", text: "Orders synchronized to Epic Hyperdrive", ts: Date.now(), tone: "success" as const },
         ...s.feed,
       ].slice(0, 40),
     })),
