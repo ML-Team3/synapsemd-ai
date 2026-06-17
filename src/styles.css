@@ -59,42 +59,63 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --color-ai: var(--ai);
+  --color-clinical: var(--clinical);
+  --color-revenue: var(--revenue);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-critical: var(--critical);
+  --color-surface-1: var(--surface-1);
+  --color-surface-2: var(--surface-2);
+  --font-display: "Space Grotesk", "Inter", system-ui, sans-serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.129 0.042 264.695);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755);
-  --primary-foreground: oklch(0.984 0.003 247.858);
-  --secondary: oklch(0.968 0.007 247.896);
-  --secondary-foreground: oklch(0.208 0.042 265.755);
-  --muted: oklch(0.968 0.007 247.896);
-  --muted-foreground: oklch(0.554 0.046 257.417);
-  --accent: oklch(0.968 0.007 247.896);
-  --accent-foreground: oklch(0.208 0.042 265.755);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.929 0.013 255.508);
-  --input: oklch(0.929 0.013 255.508);
-  --ring: oklch(0.704 0.04 256.788);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.984 0.003 247.858);
-  --sidebar-foreground: oklch(0.129 0.042 264.695);
-  --sidebar-primary: oklch(0.208 0.042 265.755);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.968 0.007 247.896);
-  --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
-  --sidebar-border: oklch(0.929 0.013 255.508);
-  --sidebar-ring: oklch(0.704 0.04 256.788);
+  --radius: 0.75rem;
+  /* Deep space background #070B17 */
+  --background: oklch(0.16 0.025 265);
+  --foreground: oklch(0.97 0.005 250);
+  --surface-1: oklch(0.22 0.028 265);
+  --surface-2: oklch(0.28 0.03 265);
+  --card: oklch(0.22 0.028 265 / 0.6);
+  --card-foreground: oklch(0.97 0.005 250);
+  --popover: oklch(0.18 0.025 265);
+  --popover-foreground: oklch(0.97 0.005 250);
+  --primary: oklch(0.82 0.16 185);
+  --primary-foreground: oklch(0.14 0.02 265);
+  --secondary: oklch(0.28 0.03 265);
+  --secondary-foreground: oklch(0.97 0.005 250);
+  --muted: oklch(0.26 0.025 265);
+  --muted-foreground: oklch(0.7 0.02 255);
+  --accent: oklch(0.3 0.035 265);
+  --accent-foreground: oklch(0.97 0.005 250);
+  --destructive: oklch(0.65 0.24 25);
+  --destructive-foreground: oklch(0.98 0.005 250);
+  --border: oklch(1 0 0 / 0.08);
+  --input: oklch(1 0 0 / 0.1);
+  --ring: oklch(0.82 0.16 185);
+  /* Brand intelligence tones */
+  --ai: oklch(0.82 0.16 185);        /* #00E5C4 teal */
+  --clinical: oklch(0.75 0.15 235);  /* #38BDF8 sky */
+  --revenue: oklch(0.83 0.16 85);    /* #FBBF24 amber */
+  --success: oklch(0.72 0.18 145);   /* #22C55E */
+  --warning: oklch(0.72 0.18 50);    /* #F97316 */
+  --critical: oklch(0.65 0.24 25);   /* #EF4444 */
+  --chart-1: oklch(0.82 0.16 185);
+  --chart-2: oklch(0.75 0.15 235);
+  --chart-3: oklch(0.83 0.16 85);
+  --chart-4: oklch(0.72 0.18 145);
+  --chart-5: oklch(0.65 0.24 25);
+  --sidebar: oklch(0.13 0.022 265);
+  --sidebar-foreground: oklch(0.92 0.01 250);
+  --sidebar-primary: oklch(0.82 0.16 185);
+  --sidebar-primary-foreground: oklch(0.14 0.02 265);
+  --sidebar-accent: oklch(0.22 0.028 265);
+  --sidebar-accent-foreground: oklch(0.97 0.005 250);
+  --sidebar-border: oklch(1 0 0 / 0.06);
+  --sidebar-ring: oklch(0.82 0.16 185);
 }
 
 .dark {
@@ -140,5 +161,53 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: var(--font-sans);
+    background-image:
+      radial-gradient(at 15% 10%, color-mix(in oklab, var(--color-ai) 12%, transparent) 0px, transparent 50%),
+      radial-gradient(at 85% 0%, color-mix(in oklab, var(--color-clinical) 10%, transparent) 0px, transparent 55%),
+      radial-gradient(at 80% 90%, color-mix(in oklab, var(--color-revenue) 8%, transparent) 0px, transparent 50%);
+    background-attachment: fixed;
   }
+
+  h1, h2, h3, h4, h5 { font-family: var(--font-display); letter-spacing: -0.01em; }
+}
+
+@utility glass {
+  background: color-mix(in oklab, white 6%, transparent);
+  backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid color-mix(in oklab, white 10%, transparent);
+}
+
+@utility glass-strong {
+  background: color-mix(in oklab, white 9%, transparent);
+  backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid color-mix(in oklab, white 14%, transparent);
+}
+
+@utility text-gradient-ai {
+  background: linear-gradient(135deg, var(--color-ai), var(--color-clinical));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--color-ai) 60%, transparent); }
+  70% { box-shadow: 0 0 0 10px color-mix(in oklab, var(--color-ai) 0%, transparent); }
+  100% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--color-ai) 0%, transparent); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes ticker {
+  0% { transform: translateY(8px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@utility pulse-dot {
+  animation: pulse-ring 2s infinite;
+  border-radius: 9999px;
 }
