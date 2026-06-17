@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as ScribeRouteImport } from './routes/scribe'
 import { Route as RevenueRouteImport } from './routes/revenue'
 import { Route as ClinicalRouteImport } from './routes/clinical'
+import { Route as AiRouteImport } from './routes/ai'
 import { Route as IndexRouteImport } from './routes/index'
 
 const ScribeRoute = ScribeRouteImport.update({
@@ -29,6 +30,11 @@ const ClinicalRoute = ClinicalRouteImport.update({
   path: '/clinical',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AiRoute = AiRouteImport.update({
+  id: '/ai',
+  path: '/ai',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -37,12 +43,14 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/ai': typeof AiRoute
   '/clinical': typeof ClinicalRoute
   '/revenue': typeof RevenueRoute
   '/scribe': typeof ScribeRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/ai': typeof AiRoute
   '/clinical': typeof ClinicalRoute
   '/revenue': typeof RevenueRoute
   '/scribe': typeof ScribeRoute
@@ -50,20 +58,22 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/ai': typeof AiRoute
   '/clinical': typeof ClinicalRoute
   '/revenue': typeof RevenueRoute
   '/scribe': typeof ScribeRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/clinical' | '/revenue' | '/scribe'
+  fullPaths: '/' | '/ai' | '/clinical' | '/revenue' | '/scribe'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/clinical' | '/revenue' | '/scribe'
-  id: '__root__' | '/' | '/clinical' | '/revenue' | '/scribe'
+  to: '/' | '/ai' | '/clinical' | '/revenue' | '/scribe'
+  id: '__root__' | '/' | '/ai' | '/clinical' | '/revenue' | '/scribe'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AiRoute: typeof AiRoute
   ClinicalRoute: typeof ClinicalRoute
   RevenueRoute: typeof RevenueRoute
   ScribeRoute: typeof ScribeRoute
@@ -92,6 +102,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClinicalRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ai': {
+      id: '/ai'
+      path: '/ai'
+      fullPath: '/ai'
+      preLoaderRoute: typeof AiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -104,6 +121,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AiRoute: AiRoute,
   ClinicalRoute: ClinicalRoute,
   RevenueRoute: RevenueRoute,
   ScribeRoute: ScribeRoute,
