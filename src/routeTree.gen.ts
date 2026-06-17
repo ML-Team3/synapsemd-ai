@@ -9,8 +9,44 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ScribeRouteImport } from './routes/scribe'
+import { Route as RevenueRouteImport } from './routes/revenue'
+import { Route as OperationsRouteImport } from './routes/operations'
+import { Route as InteropRouteImport } from './routes/interop'
+import { Route as ClinicalRouteImport } from './routes/clinical'
+import { Route as AiRouteImport } from './routes/ai'
 import { Route as IndexRouteImport } from './routes/index'
 
+const ScribeRoute = ScribeRouteImport.update({
+  id: '/scribe',
+  path: '/scribe',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RevenueRoute = RevenueRouteImport.update({
+  id: '/revenue',
+  path: '/revenue',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OperationsRoute = OperationsRouteImport.update({
+  id: '/operations',
+  path: '/operations',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InteropRoute = InteropRouteImport.update({
+  id: '/interop',
+  path: '/interop',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ClinicalRoute = ClinicalRouteImport.update({
+  id: '/clinical',
+  path: '/clinical',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AiRoute = AiRouteImport.update({
+  id: '/ai',
+  path: '/ai',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -19,28 +55,116 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/ai': typeof AiRoute
+  '/clinical': typeof ClinicalRoute
+  '/interop': typeof InteropRoute
+  '/operations': typeof OperationsRoute
+  '/revenue': typeof RevenueRoute
+  '/scribe': typeof ScribeRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/ai': typeof AiRoute
+  '/clinical': typeof ClinicalRoute
+  '/interop': typeof InteropRoute
+  '/operations': typeof OperationsRoute
+  '/revenue': typeof RevenueRoute
+  '/scribe': typeof ScribeRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/ai': typeof AiRoute
+  '/clinical': typeof ClinicalRoute
+  '/interop': typeof InteropRoute
+  '/operations': typeof OperationsRoute
+  '/revenue': typeof RevenueRoute
+  '/scribe': typeof ScribeRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/ai'
+    | '/clinical'
+    | '/interop'
+    | '/operations'
+    | '/revenue'
+    | '/scribe'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/ai'
+    | '/clinical'
+    | '/interop'
+    | '/operations'
+    | '/revenue'
+    | '/scribe'
+  id:
+    | '__root__'
+    | '/'
+    | '/ai'
+    | '/clinical'
+    | '/interop'
+    | '/operations'
+    | '/revenue'
+    | '/scribe'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AiRoute: typeof AiRoute
+  ClinicalRoute: typeof ClinicalRoute
+  InteropRoute: typeof InteropRoute
+  OperationsRoute: typeof OperationsRoute
+  RevenueRoute: typeof RevenueRoute
+  ScribeRoute: typeof ScribeRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/scribe': {
+      id: '/scribe'
+      path: '/scribe'
+      fullPath: '/scribe'
+      preLoaderRoute: typeof ScribeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/revenue': {
+      id: '/revenue'
+      path: '/revenue'
+      fullPath: '/revenue'
+      preLoaderRoute: typeof RevenueRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/operations': {
+      id: '/operations'
+      path: '/operations'
+      fullPath: '/operations'
+      preLoaderRoute: typeof OperationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/interop': {
+      id: '/interop'
+      path: '/interop'
+      fullPath: '/interop'
+      preLoaderRoute: typeof InteropRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/clinical': {
+      id: '/clinical'
+      path: '/clinical'
+      fullPath: '/clinical'
+      preLoaderRoute: typeof ClinicalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ai': {
+      id: '/ai'
+      path: '/ai'
+      fullPath: '/ai'
+      preLoaderRoute: typeof AiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -53,17 +177,13 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AiRoute: AiRoute,
+  ClinicalRoute: ClinicalRoute,
+  InteropRoute: InteropRoute,
+  OperationsRoute: OperationsRoute,
+  RevenueRoute: RevenueRoute,
+  ScribeRoute: ScribeRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
