@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Activity, ArrowRight, CheckCircle2, Loader2, Sparkles, ScanLine, Stethoscope, Mic, Coins, BrainCircuit, GitBranch, Network, ShieldCheck } from "lucide-react";
 import { useEncounter, STAGES } from "@/lib/encounter-store";
 import { GlassCard, SectionHeader, Bar, Pill, StatusDot } from "@/components/app/primitives";
