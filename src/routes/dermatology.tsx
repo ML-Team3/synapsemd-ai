@@ -3,6 +3,7 @@ import { Sparkles, Upload, CheckCircle2, Send } from "lucide-react";
 import { useState } from "react";
 import { GlassCard, SectionHeader, Bar, Pill, StatusDot } from "@/components/app/primitives";
 import { useEncounter } from "@/lib/encounter-store";
+import { ReportAnalyzer } from "@/components/app/ReportAnalyzer";
 
 export const Route = createFileRoute("/dermatology")({
   head: () => ({ meta: [{ title: "Dermatology AI · VoxelMed AI" }] }),
@@ -33,6 +34,8 @@ function DermatologyAI() {
         subtitle="Lesion intelligence — clinical photo, dermoscopy and risk stratification"
         right={<Pill tone="ai"><StatusDot tone="ai" /> <span className="ml-2">3 lesions analyzed</span></Pill>}
       />
+
+      <ReportAnalyzer specialty="dermatology" />
 
       <div className="grid grid-cols-1 xl:grid-cols-5 gap-6">
         <GlassCard className="xl:col-span-2">

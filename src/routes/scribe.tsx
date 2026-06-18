@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Mic, Check, X, Send, Pencil } from "lucide-react";
 import { useEncounter } from "@/lib/encounter-store";
 import { GlassCard, SectionHeader, Bar, Pill, StatusDot } from "@/components/app/primitives";
@@ -21,6 +21,14 @@ function Scribe() {
   const { transcript, soap, diagnoses, riskScore, riskPrev, orders, approveOrder, removeOrder, sendOrdersToEhr, pushFeed } = useEncounter();
   const [lines, setLines] = useState(transcript);
   const [typing, setTyping] = useState<{ speaker: string; partial: string } | null>(null);
+  // Stable per-bar opacity so the waveform doesn't trip SSR/client hydration.
+  const bars = useMemo(
+    () => Array.from({ length: 64 }, (_, i) => ({
+      h: 20 + Math.abs(Math.sin(i * 0.4)) * 80,
+      o: 0.55 + ((i * 37) % 40) / 100,
+    })),
+    [],
+  );
 
   useEffect(() => {
     let cancelled = false;
@@ -75,9 +83,9 @@ function Scribe() {
             </div>
           </div>
           <div className="mb-4 flex items-end gap-0.5 h-10">
-            {Array.from({ length: 64 }).map((_, i) => (
-              <div key={i} className="flex-1 rounded-sm bg-gradient-to-t from-[var(--color-ai)]/30 to-[var(--color-clinical)]"
-                style={{ height: `${20 + Math.abs(Math.sin(i * 0.4 + Date.now() / 600)) * 80}%`, opacity: 0.6 + Math.random() * 0.4 }} />
+            {bars.map((b, i) => (
+              <div key={i} className="flex-1 rounded-sm bg-gradient-to-t from-[var(--color-ai)]/30 to-[var(--color-clinical)] transition-all duration-300"
+                style={{ height: `${b.h}%`, opacity: b.o }} />
             ))}
           </div>
 

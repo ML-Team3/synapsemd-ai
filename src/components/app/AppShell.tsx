@@ -1,5 +1,5 @@
 import { Link, Outlet, useLocation } from "@tanstack/react-router";
-import { Activity, BrainCircuit, Coins, GitBranch, Mic, Network, Radar, ScanLine, Stethoscope, Sparkles } from "lucide-react";
+import { Activity, BrainCircuit, Coins, GitBranch, Layers, Mic, Network, Radar, Stethoscope } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
 import { useEncounter, formatDuration } from "@/lib/encounter-store";
 
@@ -7,8 +7,7 @@ const NAV = [
   { to: "/", label: "Command Center", icon: Radar },
   { to: "/scribe", label: "Ambient AI Scribe", icon: Mic },
   { to: "/clinical", label: "Clinical Intelligence", icon: Stethoscope },
-  { to: "/radiology", label: "Radiology AI", icon: ScanLine },
-  { to: "/dermatology", label: "Dermatology AI", icon: Sparkles },
+  { to: "/specialty", label: "Specialty Intelligence", icon: Layers },
   { to: "/revenue", label: "Revenue Intelligence", icon: Coins },
   { to: "/ai", label: "AI Intelligence Center", icon: BrainCircuit },
   { to: "/interop", label: "Interoperability Hub", icon: GitBranch },
