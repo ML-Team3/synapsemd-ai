@@ -11,6 +11,8 @@ export const Route = createFileRoute("/")({
 
 function CommandCenter() {
   const { patient, stageIndex, agents, diagnoses, riskScore, riskPrev, orders, coding, claimReadiness, ehrSync, feed, pushFeed, tick } = useEncounter();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
 
   useEffect(() => {
     const samples = [
@@ -118,7 +120,7 @@ function CommandCenter() {
               <div key={f.id} className="rounded-lg border border-white/5 bg-white/[0.02] p-2.5 text-xs" style={{ animation: "ticker 0.4s ease-out" }}>
                 <div className="flex items-center justify-between mb-0.5">
                   <span className="text-[10px] uppercase tracking-wider" style={{ color: `var(--color-${f.tone ?? "ai"})` }}>{f.agent}</span>
-                  <span className="text-[10px] font-mono text-muted-foreground">{new Date(f.ts).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" })}</span>
+                  <span className="text-[10px] font-mono text-muted-foreground">{mounted ? new Date(f.ts).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" }) : "--:--:--"}</span>
                 </div>
                 <div className="text-foreground/90">{f.text}</div>
               </div>
