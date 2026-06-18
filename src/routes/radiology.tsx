@@ -3,6 +3,7 @@ import { ScanLine, Upload, CheckCircle2, AlertTriangle, FileText, Send } from "l
 import { useState } from "react";
 import { GlassCard, SectionHeader, Bar, Pill, StatusDot } from "@/components/app/primitives";
 import { useEncounter } from "@/lib/encounter-store";
+import { ReportAnalyzer } from "@/components/app/ReportAnalyzer";
 
 export const Route = createFileRoute("/radiology")({
   head: () => ({ meta: [{ title: "Radiology AI · VoxelMed AI" }] }),
@@ -44,6 +45,8 @@ function RadiologyAI() {
           </div>
         }
       />
+
+      <ReportAnalyzer specialty="radiology" />
 
       <div className="grid grid-cols-1 xl:grid-cols-5 gap-6">
         <GlassCard className="xl:col-span-2">
