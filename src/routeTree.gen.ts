@@ -14,6 +14,7 @@ import { Route as RevenueRouteImport } from './routes/revenue'
 import { Route as RadiologyRouteImport } from './routes/radiology'
 import { Route as OperationsRouteImport } from './routes/operations'
 import { Route as InteropRouteImport } from './routes/interop'
+import { Route as DermatologyRouteImport } from './routes/dermatology'
 import { Route as ClinicalRouteImport } from './routes/clinical'
 import { Route as AiRouteImport } from './routes/ai'
 import { Route as IndexRouteImport } from './routes/index'
@@ -43,6 +44,11 @@ const InteropRoute = InteropRouteImport.update({
   path: '/interop',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DermatologyRoute = DermatologyRouteImport.update({
+  id: '/dermatology',
+  path: '/dermatology',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ClinicalRoute = ClinicalRouteImport.update({
   id: '/clinical',
   path: '/clinical',
@@ -63,6 +69,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/ai': typeof AiRoute
   '/clinical': typeof ClinicalRoute
+  '/dermatology': typeof DermatologyRoute
   '/interop': typeof InteropRoute
   '/operations': typeof OperationsRoute
   '/radiology': typeof RadiologyRoute
@@ -73,6 +80,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/ai': typeof AiRoute
   '/clinical': typeof ClinicalRoute
+  '/dermatology': typeof DermatologyRoute
   '/interop': typeof InteropRoute
   '/operations': typeof OperationsRoute
   '/radiology': typeof RadiologyRoute
@@ -84,6 +92,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/ai': typeof AiRoute
   '/clinical': typeof ClinicalRoute
+  '/dermatology': typeof DermatologyRoute
   '/interop': typeof InteropRoute
   '/operations': typeof OperationsRoute
   '/radiology': typeof RadiologyRoute
@@ -96,6 +105,7 @@ export interface FileRouteTypes {
     | '/'
     | '/ai'
     | '/clinical'
+    | '/dermatology'
     | '/interop'
     | '/operations'
     | '/radiology'
@@ -106,6 +116,7 @@ export interface FileRouteTypes {
     | '/'
     | '/ai'
     | '/clinical'
+    | '/dermatology'
     | '/interop'
     | '/operations'
     | '/radiology'
@@ -116,6 +127,7 @@ export interface FileRouteTypes {
     | '/'
     | '/ai'
     | '/clinical'
+    | '/dermatology'
     | '/interop'
     | '/operations'
     | '/radiology'
@@ -127,6 +139,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AiRoute: typeof AiRoute
   ClinicalRoute: typeof ClinicalRoute
+  DermatologyRoute: typeof DermatologyRoute
   InteropRoute: typeof InteropRoute
   OperationsRoute: typeof OperationsRoute
   RadiologyRoute: typeof RadiologyRoute
@@ -171,6 +184,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InteropRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dermatology': {
+      id: '/dermatology'
+      path: '/dermatology'
+      fullPath: '/dermatology'
+      preLoaderRoute: typeof DermatologyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/clinical': {
       id: '/clinical'
       path: '/clinical'
@@ -199,6 +219,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AiRoute: AiRoute,
   ClinicalRoute: ClinicalRoute,
+  DermatologyRoute: DermatologyRoute,
   InteropRoute: InteropRoute,
   OperationsRoute: OperationsRoute,
   RadiologyRoute: RadiologyRoute,

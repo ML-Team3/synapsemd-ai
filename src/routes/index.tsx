@@ -1,6 +1,6 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect } from "react";
-import { Activity, ArrowRight, CheckCircle2, Loader2, Sparkles } from "lucide-react";
+import { Activity, ArrowRight, CheckCircle2, Loader2, Sparkles, ScanLine, Stethoscope, Mic, Coins, BrainCircuit, GitBranch, Network, ShieldCheck } from "lucide-react";
 import { useEncounter, STAGES } from "@/lib/encounter-store";
 import { GlassCard, SectionHeader, Bar, Pill, StatusDot } from "@/components/app/primitives";
 
@@ -36,7 +36,7 @@ function CommandCenter() {
       <SectionHeader
         eyebrow="Mission Control"
         title="Command Center"
-        subtitle="Live patient encounter orchestration across 8 AI agents"
+        subtitle="Live orchestration of the VoxelMed AI Clinical Intelligence OS — from encounter to reimbursement"
         right={<Pill tone="ai"><Sparkles className="h-3 w-3 mr-1" /> Autonomous mode</Pill>}
       />
 
@@ -141,6 +141,27 @@ function CommandCenter() {
         <ArrowRight className="h-3 w-3" />
         Continue to <span className="text-[var(--color-ai)]">Ambient AI Scribe</span> for live conversation
       </div>
+
+      {/* Platform module map (SRS v3.0) */}
+      <SectionHeader eyebrow="Platform" title="Healthcare AI Operating System" subtitle="One ecosystem · shared patient, documentation, coding, compliance & EHR services" />
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        <ModuleCard to="/scribe" icon={Mic} tone="ai" title="Ambient Documentation" desc="Real-time listening, SOAP & order detection." kpis={["97% ASR", "Auto SOAP", "Order capture"]} />
+        <ModuleCard to="/clinical" icon={Stethoscope} tone="clinical" title="Clinical Intelligence" desc="Differential, guidelines, risk, med safety." kpis={["HEART/TIMI", "AHA 2024", "Drug-allergy"]} />
+        <ModuleCard to="/radiology" icon={ScanLine} tone="ai" title="Radiology AI" desc="X-Ray, CT, MRI, US — findings & reports." kpis={["PACS", "DICOM", "Auto-impression"]} />
+        <ModuleCard to="/dermatology" icon={Sparkles} tone="ai" title="Dermatology AI" desc="Lesion intelligence & melanoma risk." kpis={["ABCDE", "Similar-case", "Tx planning"]} />
+        <ModuleCard to="/revenue" icon={Coins} tone="revenue" title="Revenue Intelligence" desc="ICD/CPT/HCPCS, HCC, denials." kpis={["I21.4 NSTEMI", "RAF +0.31", "Denial 8%"]} />
+        <ModuleCard to="/ai" icon={BrainCircuit} tone="ai" title="AI Intelligence Center" desc="Explainability, agent orchestration, safety." kpis={["10 agents", "XAI", "Hallucination ✓"]} />
+        <ModuleCard to="/interop" icon={GitBranch} tone="clinical" title="Interoperability Hub" desc="Epic, Cerner, Athena · FHIR R4 · HL7." kpis={["FHIR R4", "SMART", "C-CDA"]} />
+        <ModuleCard to="/operations" icon={Network} tone="revenue" title="Operations & Analytics" desc="Clinical, financial, executive KPIs." kpis={["Time saved", "Accuracy", "Revenue"]} />
+      </div>
+
+      <GlassCard className="!p-4">
+        <div className="flex flex-wrap items-center gap-4 text-xs">
+          <div className="flex items-center gap-2 text-[var(--color-success)]"><ShieldCheck className="h-4 w-4" /> HIPAA · GDPR · SOC 2 controls active</div>
+          <span className="text-muted-foreground">Audit logging on · PHI access monitored · RBAC + MFA enforced</span>
+          <span className="ml-auto text-muted-foreground">VoxelMed AI v3.0 · Clinician-in-the-loop</span>
+        </div>
+      </GlassCard>
     </div>
   );
 }
@@ -152,5 +173,25 @@ function Snap({ label, value, sub, tone }: { label: string; value: string; sub: 
       <div className="text-lg font-display font-bold" style={{ color: `var(--color-${tone})` }}>{value}</div>
       <div className="text-[11px] text-muted-foreground mt-0.5 line-clamp-1">{sub}</div>
     </GlassCard>
+  );
+}
+
+function ModuleCard({ to, icon: Icon, tone, title, desc, kpis }: { to: string; icon: any; tone: "ai" | "clinical" | "revenue"; title: string; desc: string; kpis: string[] }) {
+  return (
+    <Link to={to} className="group">
+      <GlassCard className="!p-4 transition-all group-hover:-translate-y-0.5 group-hover:shadow-[0_0_40px_-16px_var(--color-ai)]">
+        <div className="flex items-center justify-between mb-2">
+          <div className="h-9 w-9 rounded-lg grid place-items-center" style={{ background: `color-mix(in oklab, var(--color-${tone}) 18%, transparent)`, color: `var(--color-${tone})` }}>
+            <Icon className="h-4 w-4" />
+          </div>
+          <ArrowRight className="h-3.5 w-3.5 text-muted-foreground group-hover:text-[var(--color-ai)]" />
+        </div>
+        <div className="text-sm font-semibold">{title}</div>
+        <div className="text-[11px] text-muted-foreground mt-0.5 leading-relaxed">{desc}</div>
+        <div className="mt-3 flex flex-wrap gap-1">
+          {kpis.map((k) => (<Pill key={k} tone="muted">{k}</Pill>))}
+        </div>
+      </GlassCard>
+    </Link>
   );
 }
