@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ScribeRouteImport } from './routes/scribe'
 import { Route as RevenueRouteImport } from './routes/revenue'
+import { Route as RadiologyRouteImport } from './routes/radiology'
 import { Route as OperationsRouteImport } from './routes/operations'
 import { Route as InteropRouteImport } from './routes/interop'
 import { Route as ClinicalRouteImport } from './routes/clinical'
@@ -25,6 +26,11 @@ const ScribeRoute = ScribeRouteImport.update({
 const RevenueRoute = RevenueRouteImport.update({
   id: '/revenue',
   path: '/revenue',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RadiologyRoute = RadiologyRouteImport.update({
+  id: '/radiology',
+  path: '/radiology',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OperationsRoute = OperationsRouteImport.update({
@@ -59,6 +65,7 @@ export interface FileRoutesByFullPath {
   '/clinical': typeof ClinicalRoute
   '/interop': typeof InteropRoute
   '/operations': typeof OperationsRoute
+  '/radiology': typeof RadiologyRoute
   '/revenue': typeof RevenueRoute
   '/scribe': typeof ScribeRoute
 }
@@ -68,6 +75,7 @@ export interface FileRoutesByTo {
   '/clinical': typeof ClinicalRoute
   '/interop': typeof InteropRoute
   '/operations': typeof OperationsRoute
+  '/radiology': typeof RadiologyRoute
   '/revenue': typeof RevenueRoute
   '/scribe': typeof ScribeRoute
 }
@@ -78,6 +86,7 @@ export interface FileRoutesById {
   '/clinical': typeof ClinicalRoute
   '/interop': typeof InteropRoute
   '/operations': typeof OperationsRoute
+  '/radiology': typeof RadiologyRoute
   '/revenue': typeof RevenueRoute
   '/scribe': typeof ScribeRoute
 }
@@ -89,6 +98,7 @@ export interface FileRouteTypes {
     | '/clinical'
     | '/interop'
     | '/operations'
+    | '/radiology'
     | '/revenue'
     | '/scribe'
   fileRoutesByTo: FileRoutesByTo
@@ -98,6 +108,7 @@ export interface FileRouteTypes {
     | '/clinical'
     | '/interop'
     | '/operations'
+    | '/radiology'
     | '/revenue'
     | '/scribe'
   id:
@@ -107,6 +118,7 @@ export interface FileRouteTypes {
     | '/clinical'
     | '/interop'
     | '/operations'
+    | '/radiology'
     | '/revenue'
     | '/scribe'
   fileRoutesById: FileRoutesById
@@ -117,6 +129,7 @@ export interface RootRouteChildren {
   ClinicalRoute: typeof ClinicalRoute
   InteropRoute: typeof InteropRoute
   OperationsRoute: typeof OperationsRoute
+  RadiologyRoute: typeof RadiologyRoute
   RevenueRoute: typeof RevenueRoute
   ScribeRoute: typeof ScribeRoute
 }
@@ -135,6 +148,13 @@ declare module '@tanstack/react-router' {
       path: '/revenue'
       fullPath: '/revenue'
       preLoaderRoute: typeof RevenueRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/radiology': {
+      id: '/radiology'
+      path: '/radiology'
+      fullPath: '/radiology'
+      preLoaderRoute: typeof RadiologyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/operations': {
@@ -181,6 +201,7 @@ const rootRouteChildren: RootRouteChildren = {
   ClinicalRoute: ClinicalRoute,
   InteropRoute: InteropRoute,
   OperationsRoute: OperationsRoute,
+  RadiologyRoute: RadiologyRoute,
   RevenueRoute: RevenueRoute,
   ScribeRoute: ScribeRoute,
 }
