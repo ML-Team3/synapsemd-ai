@@ -1,5 +1,5 @@
 import { Link, Outlet, useLocation } from "@tanstack/react-router";
-import { Activity, BrainCircuit, Coins, GitBranch, Mic, Network, Radar, Stethoscope } from "lucide-react";
+import { Activity, BrainCircuit, Coins, GitBranch, Mic, Network, Radar, ScanLine, Stethoscope, Sparkles } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
 import { useEncounter, formatDuration } from "@/lib/encounter-store";
 
@@ -7,6 +7,8 @@ const NAV = [
   { to: "/", label: "Command Center", icon: Radar },
   { to: "/scribe", label: "Ambient AI Scribe", icon: Mic },
   { to: "/clinical", label: "Clinical Intelligence", icon: Stethoscope },
+  { to: "/radiology", label: "Radiology AI", icon: ScanLine },
+  { to: "/dermatology", label: "Dermatology AI", icon: Sparkles },
   { to: "/revenue", label: "Revenue Intelligence", icon: Coins },
   { to: "/ai", label: "AI Intelligence Center", icon: BrainCircuit },
   { to: "/interop", label: "Interoperability Hub", icon: GitBranch },
@@ -15,8 +17,10 @@ const NAV = [
 
 function GlobalEncounterBar() {
   const { patient, startedAt } = useEncounter();
-  const [now, setNow] = useState(Date.now());
+  // Avoid SSR/client hydration mismatch — render time only after mount.
+  const [now, setNow] = useState<number | null>(null);
   useEffect(() => {
+    setNow(Date.now());
     const t = setInterval(() => setNow(Date.now()), 1000);
     return () => clearInterval(t);
   }, []);
@@ -35,7 +39,7 @@ function GlobalEncounterBar() {
         <span className="text-muted-foreground">MRN {patient.mrn}</span>
         <span className="text-[var(--color-critical)]">Priority: {patient.priority}</span>
         <span className="text-[var(--color-warning)]">⚠ Allergy: {patient.allergies.join(", ")}</span>
-        <span className="text-muted-foreground">Duration: <span className="text-foreground font-mono">{formatDuration(now - startedAt)}</span></span>
+        <span className="text-muted-foreground">Duration: <span className="text-foreground font-mono">{now ? formatDuration(now - startedAt) : "--"}</span></span>
       </div>
       <div className="ml-auto flex items-center gap-2 text-xs">
         <Activity className="h-4 w-4 text-[var(--color-ai)]" />
