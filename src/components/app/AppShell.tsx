@@ -1,7 +1,11 @@
-import { Link, Outlet, useLocation } from "@tanstack/react-router";
-import { Activity, BrainCircuit, Coins, GitBranch, Layers, Mic, Network, Radar, Stethoscope } from "lucide-react";
-import { useEffect, useState, type ReactNode } from "react";
+import { Link, Outlet, useLocation, useNavigate } from "@tanstack/react-router";
+import {
+  Activity, BrainCircuit, ChevronDown, Coins, GitBranch, Layers, LogOut, Mic, Network,
+  Radar, Settings, ShieldCheck, Stethoscope, User as UserIcon, Clock, X, Loader2,
+} from "lucide-react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { useEncounter, formatDuration } from "@/lib/encounter-store";
+import { useAuth, isAuthRoute, ROLE_LABEL } from "@/lib/auth-store";
 
 const NAV = [
   { to: "/", label: "Command Center", icon: Radar },
@@ -50,6 +54,27 @@ function GlobalEncounterBar() {
 
 export function AppShell({ children }: { children?: ReactNode }) {
   const loc = useLocation();
+  const navigate = useNavigate();
+  const { user, mfaPending, rolePending } = useAuth();
+  const onAuth = isAuthRoute(loc.pathname);
+
+  // Route guard
+  useEffect(() => {
+    if (onAuth) return;
+    if (!user) navigate({ to: "/login" });
+    else if (mfaPending) navigate({ to: "/mfa" });
+    else if (rolePending || !user.role) navigate({ to: "/role-select" });
+  }, [onAuth, user, mfaPending, rolePending, navigate]);
+
+  if (onAuth) return <>{children ?? <Outlet />}</>;
+  if (!user || mfaPending || !user.role) {
+    return (
+      <div className="min-h-screen grid place-items-center text-muted-foreground text-sm">
+        <Loader2 className="h-5 w-5 animate-spin text-[var(--color-ai)]" />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen flex">
       <aside className="w-64 shrink-0 border-r border-white/5 bg-[oklch(0.13_0.022_265)]/80 backdrop-blur-xl flex flex-col">
@@ -88,9 +113,11 @@ export function AppShell({ children }: { children?: ReactNode }) {
         </div>
       </aside>
       <main className="flex-1 min-w-0 flex flex-col">
+        <TopBar />
         <GlobalEncounterBar />
         <div className="flex-1 p-6 lg:p-8">{children ?? <Outlet />}</div>
       </main>
+      <SessionWatcher />
     </div>
   );
 }

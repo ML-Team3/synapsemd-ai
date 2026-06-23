@@ -13,6 +13,7 @@ import { Route as SpecialtyRouteImport } from './routes/specialty'
 import { Route as ScribeRouteImport } from './routes/scribe'
 import { Route as RoleSelectRouteImport } from './routes/role-select'
 import { Route as RevenueRouteImport } from './routes/revenue'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as RadiologyRouteImport } from './routes/radiology'
 import { Route as OperationsRouteImport } from './routes/operations'
 import { Route as MfaRouteImport } from './routes/mfa'
@@ -42,6 +43,11 @@ const RoleSelectRoute = RoleSelectRouteImport.update({
 const RevenueRoute = RevenueRouteImport.update({
   id: '/revenue',
   path: '/revenue',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RadiologyRoute = RadiologyRouteImport.update({
@@ -106,6 +112,7 @@ export interface FileRoutesByFullPath {
   '/mfa': typeof MfaRoute
   '/operations': typeof OperationsRoute
   '/radiology': typeof RadiologyRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/revenue': typeof RevenueRoute
   '/role-select': typeof RoleSelectRoute
   '/scribe': typeof ScribeRoute
@@ -122,6 +129,7 @@ export interface FileRoutesByTo {
   '/mfa': typeof MfaRoute
   '/operations': typeof OperationsRoute
   '/radiology': typeof RadiologyRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/revenue': typeof RevenueRoute
   '/role-select': typeof RoleSelectRoute
   '/scribe': typeof ScribeRoute
@@ -139,6 +147,7 @@ export interface FileRoutesById {
   '/mfa': typeof MfaRoute
   '/operations': typeof OperationsRoute
   '/radiology': typeof RadiologyRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/revenue': typeof RevenueRoute
   '/role-select': typeof RoleSelectRoute
   '/scribe': typeof ScribeRoute
@@ -157,6 +166,7 @@ export interface FileRouteTypes {
     | '/mfa'
     | '/operations'
     | '/radiology'
+    | '/reset-password'
     | '/revenue'
     | '/role-select'
     | '/scribe'
@@ -173,6 +183,7 @@ export interface FileRouteTypes {
     | '/mfa'
     | '/operations'
     | '/radiology'
+    | '/reset-password'
     | '/revenue'
     | '/role-select'
     | '/scribe'
@@ -189,6 +200,7 @@ export interface FileRouteTypes {
     | '/mfa'
     | '/operations'
     | '/radiology'
+    | '/reset-password'
     | '/revenue'
     | '/role-select'
     | '/scribe'
@@ -206,6 +218,7 @@ export interface RootRouteChildren {
   MfaRoute: typeof MfaRoute
   OperationsRoute: typeof OperationsRoute
   RadiologyRoute: typeof RadiologyRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   RevenueRoute: typeof RevenueRoute
   RoleSelectRoute: typeof RoleSelectRoute
   ScribeRoute: typeof ScribeRoute
@@ -240,6 +253,13 @@ declare module '@tanstack/react-router' {
       path: '/revenue'
       fullPath: '/revenue'
       preLoaderRoute: typeof RevenueRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/radiology': {
@@ -326,6 +346,7 @@ const rootRouteChildren: RootRouteChildren = {
   MfaRoute: MfaRoute,
   OperationsRoute: OperationsRoute,
   RadiologyRoute: RadiologyRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   RevenueRoute: RevenueRoute,
   RoleSelectRoute: RoleSelectRoute,
   ScribeRoute: ScribeRoute,
