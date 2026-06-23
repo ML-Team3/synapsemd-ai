@@ -57,7 +57,7 @@ export function AppShell({ children }: { children?: ReactNode }) {
           <div className="flex items-center gap-2">
             <div className="h-9 w-9 rounded-lg bg-gradient-to-br from-[var(--color-ai)] to-[var(--color-clinical)] grid place-items-center text-[var(--color-background)] font-black">V</div>
             <div>
-              <div className="font-display text-base font-bold tracking-tight">VoxelMed <span className="text-gradient-ai">AI</span></div>
+              <div className="font-display text-base font-bold tracking-tight">SynapseMD <span className="text-gradient-ai">AI</span></div>
               <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Clinical Intelligence OS</div>
             </div>
           </div>

@@ -5,7 +5,7 @@ import { useEncounter } from "@/lib/encounter-store";
 import { GlassCard, SectionHeader, Bar, Pill, StatusDot } from "@/components/app/primitives";
 
 export const Route = createFileRoute("/scribe")({
-  head: () => ({ meta: [{ title: "Ambient AI Scribe · VoxelMed AI" }] }),
+  head: () => ({ meta: [{ title: "Ambient AI Scribe · SynapseMD AI" }] }),
   component: Scribe,
 });
 

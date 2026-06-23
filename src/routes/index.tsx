@@ -5,7 +5,7 @@ import { useEncounter, STAGES } from "@/lib/encounter-store";
 import { GlassCard, SectionHeader, Bar, Pill, StatusDot } from "@/components/app/primitives";
 
 export const Route = createFileRoute("/")({
-  head: () => ({ meta: [{ title: "Command Center · VoxelMed AI" }] }),
+  head: () => ({ meta: [{ title: "Command Center · SynapseMD AI" }] }),
   component: CommandCenter,
 });
 
@@ -38,7 +38,7 @@ function CommandCenter() {
       <SectionHeader
         eyebrow="Mission Control"
         title="Command Center"
-        subtitle="Live orchestration of the VoxelMed AI Clinical Intelligence OS — from encounter to reimbursement"
+        subtitle="Live orchestration of the SynapseMD AI Clinical Intelligence OS — from encounter to reimbursement"
         right={<Pill tone="ai"><Sparkles className="h-3 w-3 mr-1" /> Autonomous mode</Pill>}
       />
 
@@ -161,7 +161,7 @@ function CommandCenter() {
         <div className="flex flex-wrap items-center gap-4 text-xs">
           <div className="flex items-center gap-2 text-[var(--color-success)]"><ShieldCheck className="h-4 w-4" /> HIPAA · GDPR · SOC 2 controls active</div>
           <span className="text-muted-foreground">Audit logging on · PHI access monitored · RBAC + MFA enforced</span>
-          <span className="ml-auto text-muted-foreground">VoxelMed AI v3.0 · Clinician-in-the-loop</span>
+          <span className="ml-auto text-muted-foreground">SynapseMD AI v3.0 · Clinician-in-the-loop</span>
         </div>
       </GlassCard>
     </div>

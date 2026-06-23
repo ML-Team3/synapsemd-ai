@@ -3,7 +3,7 @@ import { ScanLine, Sparkles, ArrowRight, ShieldCheck } from "lucide-react";
 import { GlassCard, SectionHeader, Pill, StatusDot } from "@/components/app/primitives";
 
 export const Route = createFileRoute("/specialty")({
-  head: () => ({ meta: [{ title: "Specialty Intelligence · VoxelMed AI" }] }),
+  head: () => ({ meta: [{ title: "Specialty Intelligence · SynapseMD AI" }] }),
   component: SpecialtyHub,
 });
 
@@ -36,7 +36,7 @@ function SpecialtyHub() {
       <SectionHeader
         eyebrow="Module 4"
         title="Specialty Intelligence"
-        subtitle="Specialty-specific AI on top of the shared VoxelMed platform — patients, documentation, coding, claims, compliance and EHR."
+        subtitle="Specialty-specific AI on top of the shared SynapseMD platform — patients, documentation, coding, claims, compliance and EHR."
         right={<Pill tone="ai"><StatusDot tone="ai" /> <span className="ml-2">2 specialties live</span></Pill>}
       />
 

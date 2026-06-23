@@ -3,7 +3,7 @@ import { Brain, ShieldCheck } from "lucide-react";
 import { GlassCard, SectionHeader, Bar, Pill } from "@/components/app/primitives";
 
 export const Route = createFileRoute("/ai")({
-  head: () => ({ meta: [{ title: "AI Intelligence Center · VoxelMed AI" }] }),
+  head: () => ({ meta: [{ title: "AI Intelligence Center · SynapseMD AI" }] }),
   component: AIIntel,
 });
 

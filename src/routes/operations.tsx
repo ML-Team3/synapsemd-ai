@@ -4,7 +4,7 @@ import { GlassCard, SectionHeader, Bar, Pill } from "@/components/app/primitives
 import { ShieldCheck } from "lucide-react";
 
 export const Route = createFileRoute("/operations")({
-  head: () => ({ meta: [{ title: "Operations Center · VoxelMed AI" }] }),
+  head: () => ({ meta: [{ title: "Operations Center · SynapseMD AI" }] }),
   component: Operations,
 });
 
