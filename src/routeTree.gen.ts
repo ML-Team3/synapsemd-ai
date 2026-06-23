@@ -14,6 +14,7 @@ import { Route as ScribeRouteImport } from './routes/scribe'
 import { Route as RevenueRouteImport } from './routes/revenue'
 import { Route as RadiologyRouteImport } from './routes/radiology'
 import { Route as OperationsRouteImport } from './routes/operations'
+import { Route as MfaRouteImport } from './routes/mfa'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as InteropRouteImport } from './routes/interop'
 import { Route as DermatologyRouteImport } from './routes/dermatology'
@@ -44,6 +45,11 @@ const RadiologyRoute = RadiologyRouteImport.update({
 const OperationsRoute = OperationsRouteImport.update({
   id: '/operations',
   path: '/operations',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MfaRoute = MfaRouteImport.update({
+  id: '/mfa',
+  path: '/mfa',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -84,6 +90,7 @@ export interface FileRoutesByFullPath {
   '/dermatology': typeof DermatologyRoute
   '/interop': typeof InteropRoute
   '/login': typeof LoginRoute
+  '/mfa': typeof MfaRoute
   '/operations': typeof OperationsRoute
   '/radiology': typeof RadiologyRoute
   '/revenue': typeof RevenueRoute
@@ -97,6 +104,7 @@ export interface FileRoutesByTo {
   '/dermatology': typeof DermatologyRoute
   '/interop': typeof InteropRoute
   '/login': typeof LoginRoute
+  '/mfa': typeof MfaRoute
   '/operations': typeof OperationsRoute
   '/radiology': typeof RadiologyRoute
   '/revenue': typeof RevenueRoute
@@ -111,6 +119,7 @@ export interface FileRoutesById {
   '/dermatology': typeof DermatologyRoute
   '/interop': typeof InteropRoute
   '/login': typeof LoginRoute
+  '/mfa': typeof MfaRoute
   '/operations': typeof OperationsRoute
   '/radiology': typeof RadiologyRoute
   '/revenue': typeof RevenueRoute
@@ -126,6 +135,7 @@ export interface FileRouteTypes {
     | '/dermatology'
     | '/interop'
     | '/login'
+    | '/mfa'
     | '/operations'
     | '/radiology'
     | '/revenue'
@@ -139,6 +149,7 @@ export interface FileRouteTypes {
     | '/dermatology'
     | '/interop'
     | '/login'
+    | '/mfa'
     | '/operations'
     | '/radiology'
     | '/revenue'
@@ -152,6 +163,7 @@ export interface FileRouteTypes {
     | '/dermatology'
     | '/interop'
     | '/login'
+    | '/mfa'
     | '/operations'
     | '/radiology'
     | '/revenue'
@@ -166,6 +178,7 @@ export interface RootRouteChildren {
   DermatologyRoute: typeof DermatologyRoute
   InteropRoute: typeof InteropRoute
   LoginRoute: typeof LoginRoute
+  MfaRoute: typeof MfaRoute
   OperationsRoute: typeof OperationsRoute
   RadiologyRoute: typeof RadiologyRoute
   RevenueRoute: typeof RevenueRoute
@@ -208,6 +221,13 @@ declare module '@tanstack/react-router' {
       path: '/operations'
       fullPath: '/operations'
       preLoaderRoute: typeof OperationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mfa': {
+      id: '/mfa'
+      path: '/mfa'
+      fullPath: '/mfa'
+      preLoaderRoute: typeof MfaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -262,6 +282,7 @@ const rootRouteChildren: RootRouteChildren = {
   DermatologyRoute: DermatologyRoute,
   InteropRoute: InteropRoute,
   LoginRoute: LoginRoute,
+  MfaRoute: MfaRoute,
   OperationsRoute: OperationsRoute,
   RadiologyRoute: RadiologyRoute,
   RevenueRoute: RevenueRoute,
