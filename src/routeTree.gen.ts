@@ -11,10 +11,15 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SpecialtyRouteImport } from './routes/specialty'
 import { Route as ScribeRouteImport } from './routes/scribe'
+import { Route as RoleSelectRouteImport } from './routes/role-select'
 import { Route as RevenueRouteImport } from './routes/revenue'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as RadiologyRouteImport } from './routes/radiology'
 import { Route as OperationsRouteImport } from './routes/operations'
+import { Route as MfaRouteImport } from './routes/mfa'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as InteropRouteImport } from './routes/interop'
+import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as DermatologyRouteImport } from './routes/dermatology'
 import { Route as ClinicalRouteImport } from './routes/clinical'
 import { Route as AiRouteImport } from './routes/ai'
@@ -30,9 +35,19 @@ const ScribeRoute = ScribeRouteImport.update({
   path: '/scribe',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RoleSelectRoute = RoleSelectRouteImport.update({
+  id: '/role-select',
+  path: '/role-select',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RevenueRoute = RevenueRouteImport.update({
   id: '/revenue',
   path: '/revenue',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RadiologyRoute = RadiologyRouteImport.update({
@@ -45,9 +60,24 @@ const OperationsRoute = OperationsRouteImport.update({
   path: '/operations',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MfaRoute = MfaRouteImport.update({
+  id: '/mfa',
+  path: '/mfa',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const InteropRoute = InteropRouteImport.update({
   id: '/interop',
   path: '/interop',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DermatologyRoute = DermatologyRouteImport.update({
@@ -76,10 +106,15 @@ export interface FileRoutesByFullPath {
   '/ai': typeof AiRoute
   '/clinical': typeof ClinicalRoute
   '/dermatology': typeof DermatologyRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/interop': typeof InteropRoute
+  '/login': typeof LoginRoute
+  '/mfa': typeof MfaRoute
   '/operations': typeof OperationsRoute
   '/radiology': typeof RadiologyRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/revenue': typeof RevenueRoute
+  '/role-select': typeof RoleSelectRoute
   '/scribe': typeof ScribeRoute
   '/specialty': typeof SpecialtyRoute
 }
@@ -88,10 +123,15 @@ export interface FileRoutesByTo {
   '/ai': typeof AiRoute
   '/clinical': typeof ClinicalRoute
   '/dermatology': typeof DermatologyRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/interop': typeof InteropRoute
+  '/login': typeof LoginRoute
+  '/mfa': typeof MfaRoute
   '/operations': typeof OperationsRoute
   '/radiology': typeof RadiologyRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/revenue': typeof RevenueRoute
+  '/role-select': typeof RoleSelectRoute
   '/scribe': typeof ScribeRoute
   '/specialty': typeof SpecialtyRoute
 }
@@ -101,10 +141,15 @@ export interface FileRoutesById {
   '/ai': typeof AiRoute
   '/clinical': typeof ClinicalRoute
   '/dermatology': typeof DermatologyRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/interop': typeof InteropRoute
+  '/login': typeof LoginRoute
+  '/mfa': typeof MfaRoute
   '/operations': typeof OperationsRoute
   '/radiology': typeof RadiologyRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/revenue': typeof RevenueRoute
+  '/role-select': typeof RoleSelectRoute
   '/scribe': typeof ScribeRoute
   '/specialty': typeof SpecialtyRoute
 }
@@ -115,10 +160,15 @@ export interface FileRouteTypes {
     | '/ai'
     | '/clinical'
     | '/dermatology'
+    | '/forgot-password'
     | '/interop'
+    | '/login'
+    | '/mfa'
     | '/operations'
     | '/radiology'
+    | '/reset-password'
     | '/revenue'
+    | '/role-select'
     | '/scribe'
     | '/specialty'
   fileRoutesByTo: FileRoutesByTo
@@ -127,10 +177,15 @@ export interface FileRouteTypes {
     | '/ai'
     | '/clinical'
     | '/dermatology'
+    | '/forgot-password'
     | '/interop'
+    | '/login'
+    | '/mfa'
     | '/operations'
     | '/radiology'
+    | '/reset-password'
     | '/revenue'
+    | '/role-select'
     | '/scribe'
     | '/specialty'
   id:
@@ -139,10 +194,15 @@ export interface FileRouteTypes {
     | '/ai'
     | '/clinical'
     | '/dermatology'
+    | '/forgot-password'
     | '/interop'
+    | '/login'
+    | '/mfa'
     | '/operations'
     | '/radiology'
+    | '/reset-password'
     | '/revenue'
+    | '/role-select'
     | '/scribe'
     | '/specialty'
   fileRoutesById: FileRoutesById
@@ -152,10 +212,15 @@ export interface RootRouteChildren {
   AiRoute: typeof AiRoute
   ClinicalRoute: typeof ClinicalRoute
   DermatologyRoute: typeof DermatologyRoute
+  ForgotPasswordRoute: typeof ForgotPasswordRoute
   InteropRoute: typeof InteropRoute
+  LoginRoute: typeof LoginRoute
+  MfaRoute: typeof MfaRoute
   OperationsRoute: typeof OperationsRoute
   RadiologyRoute: typeof RadiologyRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   RevenueRoute: typeof RevenueRoute
+  RoleSelectRoute: typeof RoleSelectRoute
   ScribeRoute: typeof ScribeRoute
   SpecialtyRoute: typeof SpecialtyRoute
 }
@@ -176,11 +241,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ScribeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/role-select': {
+      id: '/role-select'
+      path: '/role-select'
+      fullPath: '/role-select'
+      preLoaderRoute: typeof RoleSelectRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/revenue': {
       id: '/revenue'
       path: '/revenue'
       fullPath: '/revenue'
       preLoaderRoute: typeof RevenueRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/radiology': {
@@ -197,11 +276,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OperationsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/mfa': {
+      id: '/mfa'
+      path: '/mfa'
+      fullPath: '/mfa'
+      preLoaderRoute: typeof MfaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/interop': {
       id: '/interop'
       path: '/interop'
       fullPath: '/interop'
       preLoaderRoute: typeof InteropRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dermatology': {
@@ -240,10 +340,15 @@ const rootRouteChildren: RootRouteChildren = {
   AiRoute: AiRoute,
   ClinicalRoute: ClinicalRoute,
   DermatologyRoute: DermatologyRoute,
+  ForgotPasswordRoute: ForgotPasswordRoute,
   InteropRoute: InteropRoute,
+  LoginRoute: LoginRoute,
+  MfaRoute: MfaRoute,
   OperationsRoute: OperationsRoute,
   RadiologyRoute: RadiologyRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   RevenueRoute: RevenueRoute,
+  RoleSelectRoute: RoleSelectRoute,
   ScribeRoute: ScribeRoute,
   SpecialtyRoute: SpecialtyRoute,
 }
