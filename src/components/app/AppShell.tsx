@@ -57,17 +57,19 @@ export function AppShell({ children }: { children?: ReactNode }) {
   const navigate = useNavigate();
   const { user, mfaPending, rolePending } = useAuth();
   const onAuth = isAuthRoute(loc.pathname);
+  const [hydrated, setHydrated] = useState(false);
+  useEffect(() => { setHydrated(true); }, []);
 
   // Route guard
   useEffect(() => {
-    if (onAuth) return;
+    if (!hydrated || onAuth) return;
     if (!user) navigate({ to: "/login" });
     else if (mfaPending) navigate({ to: "/mfa" });
     else if (rolePending || !user.role) navigate({ to: "/role-select" });
-  }, [onAuth, user, mfaPending, rolePending, navigate]);
+  }, [hydrated, onAuth, user, mfaPending, rolePending, navigate]);
 
   if (onAuth) return <>{children ?? <Outlet />}</>;
-  if (!user || mfaPending || !user.role) {
+  if (!hydrated || !user || mfaPending || !user.role) {
     return (
       <div className="min-h-screen grid place-items-center text-muted-foreground text-sm">
         <Loader2 className="h-5 w-5 animate-spin text-[var(--color-ai)]" />
