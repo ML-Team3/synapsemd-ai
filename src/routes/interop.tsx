@@ -5,7 +5,7 @@ import { useEncounter } from "@/lib/encounter-store";
 import { GlassCard, SectionHeader, Bar, Pill, StatusDot } from "@/components/app/primitives";
 
 export const Route = createFileRoute("/interop")({
-  head: () => ({ meta: [{ title: "Interoperability Hub · VoxelMed AI" }] }),
+  head: () => ({ meta: [{ title: "Interoperability Hub · SynapseMD AI" }] }),
   component: Interop,
 });
 

@@ -19,12 +19,12 @@ export interface SpecialtyAnalysis {
   riskRationale: string;
 }
 
-const RADIOLOGY_SYSTEM = `You are a board-certified radiologist AI assistant for VoxelMed AI.
+const RADIOLOGY_SYSTEM = `You are a board-certified radiologist AI assistant for SynapseMD AI.
 Analyze the provided imaging study and/or radiology report text. Produce a structured,
 evidence-based interpretation. Be specific and clinically accurate. Confidence is 0-100.
 Return ONLY JSON matching the schema. Do not include markdown code fences.`;
 
-const DERMATOLOGY_SYSTEM = `You are a board-certified dermatologist AI assistant for VoxelMed AI.
+const DERMATOLOGY_SYSTEM = `You are a board-certified dermatologist AI assistant for SynapseMD AI.
 Analyze the provided clinical/dermoscopy image and/or chart text. Apply ABCDE criteria where
 a pigmented lesion is present. Return ONLY JSON matching the schema. No markdown fences.`;
 

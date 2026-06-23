@@ -6,7 +6,7 @@ import { useEncounter } from "@/lib/encounter-store";
 import { ReportAnalyzer } from "@/components/app/ReportAnalyzer";
 
 export const Route = createFileRoute("/radiology")({
-  head: () => ({ meta: [{ title: "Radiology AI · VoxelMed AI" }] }),
+  head: () => ({ meta: [{ title: "Radiology AI · SynapseMD AI" }] }),
   component: RadiologyAI,
 });
 
