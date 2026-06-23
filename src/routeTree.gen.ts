@@ -18,6 +18,7 @@ import { Route as OperationsRouteImport } from './routes/operations'
 import { Route as MfaRouteImport } from './routes/mfa'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as InteropRouteImport } from './routes/interop'
+import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as DermatologyRouteImport } from './routes/dermatology'
 import { Route as ClinicalRouteImport } from './routes/clinical'
 import { Route as AiRouteImport } from './routes/ai'
@@ -68,6 +69,11 @@ const InteropRoute = InteropRouteImport.update({
   path: '/interop',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DermatologyRoute = DermatologyRouteImport.update({
   id: '/dermatology',
   path: '/dermatology',
@@ -94,6 +100,7 @@ export interface FileRoutesByFullPath {
   '/ai': typeof AiRoute
   '/clinical': typeof ClinicalRoute
   '/dermatology': typeof DermatologyRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/interop': typeof InteropRoute
   '/login': typeof LoginRoute
   '/mfa': typeof MfaRoute
@@ -109,6 +116,7 @@ export interface FileRoutesByTo {
   '/ai': typeof AiRoute
   '/clinical': typeof ClinicalRoute
   '/dermatology': typeof DermatologyRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/interop': typeof InteropRoute
   '/login': typeof LoginRoute
   '/mfa': typeof MfaRoute
@@ -125,6 +133,7 @@ export interface FileRoutesById {
   '/ai': typeof AiRoute
   '/clinical': typeof ClinicalRoute
   '/dermatology': typeof DermatologyRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/interop': typeof InteropRoute
   '/login': typeof LoginRoute
   '/mfa': typeof MfaRoute
@@ -142,6 +151,7 @@ export interface FileRouteTypes {
     | '/ai'
     | '/clinical'
     | '/dermatology'
+    | '/forgot-password'
     | '/interop'
     | '/login'
     | '/mfa'
@@ -157,6 +167,7 @@ export interface FileRouteTypes {
     | '/ai'
     | '/clinical'
     | '/dermatology'
+    | '/forgot-password'
     | '/interop'
     | '/login'
     | '/mfa'
@@ -172,6 +183,7 @@ export interface FileRouteTypes {
     | '/ai'
     | '/clinical'
     | '/dermatology'
+    | '/forgot-password'
     | '/interop'
     | '/login'
     | '/mfa'
@@ -188,6 +200,7 @@ export interface RootRouteChildren {
   AiRoute: typeof AiRoute
   ClinicalRoute: typeof ClinicalRoute
   DermatologyRoute: typeof DermatologyRoute
+  ForgotPasswordRoute: typeof ForgotPasswordRoute
   InteropRoute: typeof InteropRoute
   LoginRoute: typeof LoginRoute
   MfaRoute: typeof MfaRoute
@@ -264,6 +277,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InteropRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dermatology': {
       id: '/dermatology'
       path: '/dermatology'
@@ -300,6 +320,7 @@ const rootRouteChildren: RootRouteChildren = {
   AiRoute: AiRoute,
   ClinicalRoute: ClinicalRoute,
   DermatologyRoute: DermatologyRoute,
+  ForgotPasswordRoute: ForgotPasswordRoute,
   InteropRoute: InteropRoute,
   LoginRoute: LoginRoute,
   MfaRoute: MfaRoute,
