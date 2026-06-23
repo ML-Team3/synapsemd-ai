@@ -2,7 +2,6 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Stethoscope, ScanLine, Sparkles, Coins, Receipt, ShieldCheck, Server, ArrowRight } from "lucide-react";
 import { useAuth, ROLE_HOME, type Role } from "@/lib/auth-store";
-import { AuthShell } from "./mfa";
 
 export const Route = createFileRoute("/role-select")({
   head: () => ({ meta: [{ title: "Select Role · SynapseMD AI" }] }),
@@ -78,8 +77,6 @@ function RolePage() {
           </button>
         </div>
       </div>
-      {/* unused AuthShell ref to keep import grouping clean */}
-      <span className="hidden"><AuthShell>{null as any}</AuthShell></span>
     </div>
   );
 }
