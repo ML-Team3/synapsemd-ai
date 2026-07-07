@@ -37,7 +37,7 @@ export const ROLE_HOME: Record<Role, string> = {
   coder: "/revenue",
   billing: "/revenue",
   compliance: "/operations",
-  admin: "/",
+  admin: "/admin",
 };
 
 interface AuthState {
