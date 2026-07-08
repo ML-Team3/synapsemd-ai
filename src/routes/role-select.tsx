@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Stethoscope, ScanLine, Sparkles, Coins, Receipt, ShieldCheck, Server, ArrowRight } from "lucide-react";
+import { Stethoscope, ScanLine, Sparkles, Coins, Receipt, ShieldCheck, Server, ArrowRight, Check } from "lucide-react";
 import { useAuth, ROLE_HOME, type Role } from "@/lib/auth-store";
 
 export const Route = createFileRoute("/role-select")({
@@ -8,14 +8,28 @@ export const Route = createFileRoute("/role-select")({
   component: RolePage,
 });
 
-const ROLES: { id: Role; icon: any; title: string; desc: string; access: string; specialty: string; tone: "ai"|"clinical"|"revenue" }[] = [
-  { id: "physician", icon: Stethoscope, title: "Physician", desc: "Clinical workflows, ambient documentation, decision support.", access: "Full clinical", specialty: "General · ED · Cardiology", tone: "clinical" },
-  { id: "radiologist", icon: ScanLine, title: "Radiologist", desc: "PACS, DICOM viewer, AI findings & impressions.", access: "Imaging + report", specialty: "Radiology", tone: "ai" },
-  { id: "dermatologist", icon: Sparkles, title: "Dermatologist", desc: "Lesion intelligence, ABCDE, melanoma risk.", access: "Lesion + Tx plan", specialty: "Dermatology", tone: "ai" },
-  { id: "coder", icon: Coins, title: "Medical Coder", desc: "ICD-10 / CPT / HCC review and submission.", access: "Coding workbench", specialty: "HIM", tone: "revenue" },
-  { id: "billing", icon: Receipt, title: "Billing Specialist", desc: "Claim validation, denials, revenue recovery.", access: "Revenue cycle", specialty: "RCM", tone: "revenue" },
-  { id: "compliance", icon: ShieldCheck, title: "Compliance Officer", desc: "Audit logs, PHI access, governance controls.", access: "Read + audit", specialty: "Compliance", tone: "clinical" },
-  { id: "admin", icon: Server, title: "System Administrator", desc: "Tenancy, integrations, RBAC, observability.", access: "Full platform", specialty: "Enterprise IT", tone: "ai" },
+const ROLES: { id: Role; icon: any; title: string; desc: string; modules: string[]; tone: "ai"|"clinical"|"revenue" }[] = [
+  { id: "physician", icon: Stethoscope, title: "Physician",
+    desc: "Clinical workflows, ambient documentation, and decision support.",
+    modules: ["Command Center", "Clinical Intelligence", "Ambient AI Scribe", "Orders"], tone: "clinical" },
+  { id: "radiologist", icon: ScanLine, title: "Radiologist",
+    desc: "Radiology workflow with imaging studies, AI findings, and report generation.",
+    modules: ["Radiology Workspace", "Imaging Studies", "AI Findings", "Report Builder"], tone: "ai" },
+  { id: "dermatologist", icon: Sparkles, title: "Dermatologist",
+    desc: "Dermatology workflow with lesion analysis, risk assessment, and treatment planning.",
+    modules: ["Dermatology Workspace", "Lesion Analysis", "Risk Assessment", "Treatment Plan"], tone: "ai" },
+  { id: "coder", icon: Coins, title: "Medical Coder",
+    desc: "Coding workflow for ICD/CPT review, HCC capture, and claim preparation.",
+    modules: ["Coding Workbench", "ICD/CPT Review", "HCC Capture", "Claim Validation"], tone: "revenue" },
+  { id: "billing", icon: Receipt, title: "Billing Specialist",
+    desc: "Revenue workflow for claim validation, denial review, and payer follow-up.",
+    modules: ["Claim Validation", "Denial Risk", "Revenue Recovery", "Payer Review"], tone: "revenue" },
+  { id: "compliance", icon: ShieldCheck, title: "Compliance Officer",
+    desc: "Compliance workflow for audit logs, PHI access, and user activity monitoring.",
+    modules: ["Audit Logs", "PHI Access", "User Activity", "Compliance Dashboard"], tone: "clinical" },
+  { id: "admin", icon: Server, title: "System Administrator",
+    desc: "Administrative workflow for users, roles, integrations, and system access control.",
+    modules: ["User Management", "Integrations", "RBAC", "System Health", "Full Platform Access"], tone: "ai" },
 ];
 
 function RolePage() {
@@ -33,6 +47,8 @@ function RolePage() {
     setRole(picked);
     navigate({ to: ROLE_HOME[picked] });
   }
+
+  const pickedTitle = ROLES.find((r) => r.id === picked)?.title;
 
   return (
     <div className="min-h-screen p-6 lg:p-10 bg-[#070B17]">
@@ -61,9 +77,16 @@ function RolePage() {
                 </div>
                 <div className="text-base font-semibold">{r.title}</div>
                 <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{r.desc}</p>
-                <div className="mt-3 grid grid-cols-2 gap-2 text-[10px]">
-                  <div><div className="uppercase tracking-widest text-muted-foreground">Access</div><div className="text-foreground/90 mt-0.5">{r.access}</div></div>
-                  <div><div className="uppercase tracking-widest text-muted-foreground">Specialty</div><div className="text-foreground/90 mt-0.5">{r.specialty}</div></div>
+                <div className="mt-4 pt-3 border-t border-white/5">
+                  <div className="text-[10px] uppercase tracking-widest text-muted-foreground mb-2">Access Modules</div>
+                  <ul className="space-y-1.5">
+                    {r.modules.map((m) => (
+                      <li key={m} className="flex items-center gap-2 text-xs text-foreground/90">
+                        <Check className="h-3 w-3 shrink-0" style={{ color: `var(--color-${r.tone})` }} />
+                        <span className="truncate">{m}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </button>
             );
@@ -73,7 +96,7 @@ function RolePage() {
         <div className="mt-8 flex items-center justify-end gap-3">
           <span className="text-xs text-muted-foreground">Signed in as <span className="text-foreground">{user?.email}</span></span>
           <button disabled={!picked} onClick={go} className="rounded-lg bg-gradient-to-r from-[var(--color-ai)] to-[var(--color-clinical)] text-[var(--color-background)] font-semibold px-5 py-2.5 text-sm flex items-center gap-2 shadow-[0_0_40px_-12px_var(--color-ai)] disabled:opacity-50">
-            Continue <ArrowRight className="h-4 w-4" />
+            {pickedTitle ? `Continue as ${pickedTitle}` : "Continue"} <ArrowRight className="h-4 w-4" />
           </button>
         </div>
       </div>
