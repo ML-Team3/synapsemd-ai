@@ -202,7 +202,7 @@ function Scribe() {
                 className="rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 px-3 py-2 text-sm flex items-center gap-2"><Play className="h-4 w-4" /> New Session</button>
             )}
 
-            <button onClick={saveTranscript} disabled={!(state === "stopped" || state === "soap_generated") || state === "saved"}
+            <button onClick={saveTranscript} disabled={!(state === "stopped" || state === "soap_generated")}
               className="rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 px-3 py-2 text-sm flex items-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed">
               <Save className="h-4 w-4" /> Save Transcript
             </button>
