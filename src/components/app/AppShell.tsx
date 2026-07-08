@@ -8,6 +8,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { useEncounter, formatDuration } from "@/lib/encounter-store";
 import { useAuth, isAuthRoute, ROLE_LABEL, ROLE_HOME, type Role } from "@/lib/auth-store";
 import { ROLE_ROUTES, canAccessPage } from "@/lib/rbac";
+import { getSessionDetails } from "@/lib/session";
 
 // Full nav registry — filtered per-role below.
 const NAV_ALL = [
@@ -180,6 +181,18 @@ function TopBar() {
   const initials = user.name.split(" ").map((s) => s[0]).slice(0, 2).join("").toUpperCase();
   const roleLabel = ROLE_LABEL[user.role];
 
+  // Backend-ready session shape. When wired to GET /auth/session, replace
+  // this call with the fetched payload — component reads the same fields.
+  const sessionDetails = getSessionDetails({
+    name: user.name,
+    email: user.email,
+    role: roleLabel,
+    authenticated: true,
+    mfaVerified: true,
+    lastLoginMs: user.lastLogin ?? user.loginAt,
+  });
+  const s = sessionDetails.session;
+
   function doLogout() {
     setSigningOut(true);
     setTimeout(() => {
@@ -210,36 +223,48 @@ function TopBar() {
           </button>
 
           {open && (
-            <div className="absolute right-0 mt-2 w-[340px] max-w-[92vw] glass-strong rounded-xl p-2 z-50 shadow-[0_20px_60px_-20px_rgba(0,0,0,0.6)] max-h-[80vh] overflow-y-auto">
-              <div className="p-3 border-b border-white/5">
+            <div
+              className="absolute right-0 mt-2 w-[360px] max-w-[92vw] rounded-xl p-2 z-[100] border overflow-hidden max-h-[80vh] overflow-y-auto animate-in fade-in slide-in-from-top-1"
+              style={{
+                background: "#0F172A",
+                borderColor: "rgba(255,255,255,0.12)",
+                boxShadow: "0 20px 60px rgba(0,0,0,0.45)",
+              }}
+            >
+              <div className="p-3 rounded-lg" style={{ background: "#111827" }}>
                 <div className="flex items-center gap-3">
                   <div className="h-10 w-10 rounded-full bg-gradient-to-br from-[var(--color-ai)] to-[var(--color-clinical)] text-[var(--color-background)] grid place-items-center text-xs font-bold">{initials}</div>
                   <div className="min-w-0">
-                    <div className="text-sm font-semibold">{user.name}</div>
-                    <div className="text-[11px] text-muted-foreground truncate">{user.email}</div>
-                    <div className="mt-1 inline-flex items-center gap-1 text-[10px] rounded-md border border-[var(--color-ai)]/30 bg-[var(--color-ai)]/10 text-[var(--color-ai)] px-1.5 py-0.5">
+                    <div className="text-sm font-semibold" style={{ color: "#F8FAFC" }}>{user.name}</div>
+                    <div className="text-[11px] truncate" style={{ color: "#94A3B8" }}>{user.email}</div>
+                    <div className="mt-1 inline-flex items-center gap-1 text-[10px] rounded-md border px-1.5 py-0.5"
+                      style={{ color: "#14F1D9", borderColor: "rgba(20,241,217,0.3)", background: "rgba(20,241,217,0.1)" }}>
                       {roleLabel}
                     </div>
                   </div>
                 </div>
                 <div className="mt-3 grid grid-cols-2 gap-2 text-[10px]">
-                  <Meta label="Status" value="Online" tone="success" />
-                  <Meta label="MFA" value="Verified" tone="success" />
-                  <Meta label="Session" value="Secured" tone="success" />
-                  <Meta label="Last Login" value={mounted ? new Date(user.lastLogin ?? user.loginAt).toLocaleString([], { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" }) : "—"} />
-                  <Meta label="Device" value={user.device} />
-                  <Meta label="IP Address" value={user.ip} />
+                  <SolidMeta label="Status" value={s.status} tone={s.status === "Online" ? "success" : "muted"} />
+                  <SolidMeta label="MFA" value={s.mfa_verified ? "Verified" : "Pending"} tone={s.mfa_verified ? "success" : "warning"} />
+                  <SolidMeta label="Session" value={s.session_secured ? "Secured" : "Not Active"} tone={s.session_secured ? "success" : "muted"} />
+                  <SolidMeta label="Last Login" value={mounted ? s.last_login : "—"} />
+                  <SolidMeta label="Device" value={mounted ? s.device : "Detecting…"} />
+                  <SolidMeta label="IP Address" value={s.ip_address} tone="muted" />
                 </div>
               </div>
-              {/* Demo mode: allow role switching. In production remove this
-                  and drive role/permissions from backend session claims. */}
-              <MenuItem icon={UserIcon} label="View Profile" onClick={() => setOpen(false)} />
-              <MenuItem icon={Repeat}   label="Switch Role"  onClick={() => { setOpen(false); navigate({ to: "/role-select" }); }} />
-              <MenuItem icon={Settings} label="Account Settings" onClick={() => setOpen(false)} />
-              <MenuItem icon={ShieldCheck} label="Security Settings" onClick={() => setOpen(false)} />
-              <button onClick={() => { setOpen(false); setConfirm(true); }} className="w-full mt-1 flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-[var(--color-critical)] hover:bg-[var(--color-critical)]/10 transition">
-                <LogOut className="h-4 w-4" /> Logout
-              </button>
+              <div className="p-1 mt-1">
+                <MenuItem icon={UserIcon} label="View Profile" onClick={() => setOpen(false)} />
+                <MenuItem icon={Repeat}   label="Switch Role"  onClick={() => { setOpen(false); navigate({ to: "/role-select" }); }} />
+                <MenuItem icon={Settings} label="Account Settings" onClick={() => setOpen(false)} />
+                <MenuItem icon={ShieldCheck} label="Security Settings" onClick={() => setOpen(false)} />
+                <button onClick={() => { setOpen(false); setConfirm(true); }} className="w-full mt-1 flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition"
+                  style={{ color: "#F43F5E" }}
+                  onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(244,63,94,0.1)")}
+                  onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+                >
+                  <LogOut className="h-4 w-4" /> Logout
+                </button>
+              </div>
             </div>
           )}
         </div>
@@ -270,11 +295,16 @@ function TopBar() {
   );
 }
 
-function Meta({ label, value, tone }: { label: string; value: string; tone?: "ai" | "success" }) {
+function SolidMeta({ label, value, tone }: { label: string; value: string; tone?: "success" | "warning" | "muted" }) {
+  const color =
+    tone === "success" ? "#22C55E" :
+    tone === "warning" ? "#F59E0B" :
+    tone === "muted"   ? "#94A3B8" :
+    "#F8FAFC";
   return (
-    <div className="rounded-md border border-white/5 bg-white/[0.02] p-2">
-      <div className="uppercase tracking-widest text-muted-foreground">{label}</div>
-      <div className="mt-0.5 text-foreground/90 font-mono" style={tone ? { color: `var(--color-${tone})` } : undefined}>{value}</div>
+    <div className="rounded-md p-2" style={{ background: "#0B1120", border: "1px solid rgba(255,255,255,0.06)" }}>
+      <div className="uppercase tracking-widest" style={{ color: "#94A3B8", fontSize: 9 }}>{label}</div>
+      <div className="mt-0.5 font-mono truncate" style={{ color }}>{value}</div>
     </div>
   );
 }
